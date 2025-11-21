@@ -1,7 +1,5 @@
 import { GoogleGenAI, Type, Schema } from "@google/genai";
-import { GradientConfig, ColorStop } from "../types";
-
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+import { GradientConfig } from "../types";
 
 const gradientSchema: Schema = {
   type: Type.OBJECT,
@@ -28,6 +26,8 @@ const gradientSchema: Schema = {
 };
 
 export const generateGradientFromMood = async (prompt: string): Promise<{ config: GradientConfig, name: string, description: string }> => {
+  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+
   try {
     const response = await ai.models.generateContent({
       model: "gemini-2.5-flash",

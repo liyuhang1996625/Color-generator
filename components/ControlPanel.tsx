@@ -1,16 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { GradientConfig, ColorStop, AnimationType, GradientType } from '../types';
-import { Plus, Trash2, Sparkles, RefreshCw, Zap } from 'lucide-react';
+import { Plus, Trash2 } from 'lucide-react';
 
 interface ControlPanelProps {
   config: GradientConfig;
   onChange: (newConfig: GradientConfig) => void;
-  onAIGenerate: (prompt: string) => void;
-  isGenerating: boolean;
 }
 
-export const ControlPanel: React.FC<ControlPanelProps> = ({ config, onChange, onAIGenerate, isGenerating }) => {
-  const [aiPrompt, setAiPrompt] = useState('');
+export const ControlPanel: React.FC<ControlPanelProps> = ({ config, onChange }) => {
 
   const handleStopChange = (id: string, field: keyof ColorStop, value: string | number) => {
     const newStops = config.stops.map(stop => {
@@ -47,31 +44,6 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({ config, onChange, on
   return (
     <div className="w-full lg:w-96 bg-black border-t-0 lg:border-l border-white/20 h-full flex flex-col overflow-hidden font-mono">
       
-      {/* AI Section */}
-      <div className="p-5 border-b border-white/20 bg-black">
-        <div className="flex items-center gap-2 mb-3 text-white font-bold uppercase tracking-wider text-xs">
-          <Sparkles size={14} />
-          <h3>AI Generation</h3>
-        </div>
-        <div className="flex gap-2">
-          <input
-            type="text"
-            placeholder="Describe mood..."
-            className="flex-1 bg-black border border-white/30 px-3 py-2 text-sm text-white placeholder:text-white/30 focus:outline-none focus:border-white focus:ring-0 transition-all rounded-none"
-            value={aiPrompt}
-            onChange={(e) => setAiPrompt(e.target.value)}
-            onKeyDown={(e) => e.key === 'Enter' && onAIGenerate(aiPrompt)}
-          />
-          <button
-            onClick={() => onAIGenerate(aiPrompt)}
-            disabled={isGenerating || !aiPrompt.trim()}
-            className="bg-white hover:bg-white/80 disabled:bg-white/20 disabled:text-black/50 text-black border border-white/30 p-2 transition-all rounded-none"
-          >
-            {isGenerating ? <RefreshCw size={18} className="animate-spin" /> : <Zap size={18} />}
-          </button>
-        </div>
-      </div>
-
       <div className="flex-1 overflow-y-auto p-5 space-y-8 custom-scrollbar">
         
         {/* Basic Settings */}
